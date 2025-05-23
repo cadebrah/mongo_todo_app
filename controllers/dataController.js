@@ -31,4 +31,3 @@ router.put('/', (req, res) => handleRequest(req, res, (mp, body) => mp.upsert(bo
 router.delete('/', (req, res) => handleRequest(req, res, (mp, body) => mp.delete(body)));
 
 module.exports = router;
-``
