@@ -19,7 +19,11 @@ class MongoPersistence {
     const { table, data } = updateEvent;
     const collection = this.database.collection(table);
     const filter = { _id: new ObjectId(data.id) };
-    const updateDoc = { $set: data };
+    
+    // Remove id from data to avoid overwriting _id in MongoDB
+    const { id, ...updateData } = data;
+    const updateDoc = { $set: updateData };
+    
     await collection.updateOne(filter, updateDoc);
   }
 
@@ -27,7 +31,11 @@ class MongoPersistence {
     const { table, data } = updateEvent;
     const collection = this.database.collection(table);
     const filter = { _id: new ObjectId(data.id) };
-    const updateDoc = { $set: data };
+    
+    // Remove id from data to avoid overwriting _id in MongoDB
+    const { id, ...updateData } = data;
+    const updateDoc = { $set: updateData };
+    
     await collection.updateOne(filter, updateDoc, { upsert: true });
   }
 

@@ -5,8 +5,12 @@ const MongoPersistence = require('../mongo/mongoPersistence');
 const router = express.Router();
 
 async function handleRequest(req, res, handler) {
-  if (!req.body || !req.body.table || !req.body.data || !req.body.data.id) {
-    return res.status(400).json({ message: 'Invalid body provided' });
+  // Extract table from URL params
+  const table = req.params.table;
+  const id = req.params.id;
+  
+  if (!table) {
+    return res.status(400).json({ message: 'Table parameter is required' });
   }
 
   const mongoPersistence = new MongoPersistence({
@@ -16,7 +20,17 @@ async function handleRequest(req, res, handler) {
 
   try {
     await mongoPersistence.init();
-    await handler(mongoPersistence, req.body);
+    
+    // Create the body structure expected by mongoPersistence methods
+    const body = {
+      table: table,
+      data: {
+        id: id,
+        ...req.body // Include any additional data from request body
+      }
+    };
+    
+    await handler(mongoPersistence, body);
     res.status(200).send();
   } catch (err) {
     console.error(err);
@@ -26,8 +40,9 @@ async function handleRequest(req, res, handler) {
   }
 }
 
-router.patch('/', (req, res) => handleRequest(req, res, (mp, body) => mp.update(body)));
-router.put('/', (req, res) => handleRequest(req, res, (mp, body) => mp.upsert(body)));
-router.delete('/', (req, res) => handleRequest(req, res, (mp, body) => mp.delete(body)));
+// Routes that match your client-side URL patterns
+router.put('/:table', (req, res) => handleRequest(req, res, (mp, body) => mp.upsert(body)));
+router.patch('/:table/:id', (req, res) => handleRequest(req, res, (mp, body) => mp.update(body)));
+router.delete('/:table/:id', (req, res) => handleRequest(req, res, (mp, body) => mp.delete(body)));
 
 module.exports = router;
