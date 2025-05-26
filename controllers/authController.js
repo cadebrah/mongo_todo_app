@@ -74,7 +74,7 @@ function generatePowerSyncToken(userId, customClaims = {}) {
   };
 }
 
-odule.exports = {
+module.exports = {
   router,
   generatePowerSyncToken
 };
