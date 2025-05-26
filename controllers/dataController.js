@@ -40,6 +40,9 @@ async function handleRequest(req, res, handler) {
   }
 }
 
+
+
+
 // Routes that match your client-side URL patterns
 router.put('/:table', (req, res) => handleRequest(req, res, (mp, body) => mp.upsert(body)));
 router.patch('/:table/:id', (req, res) => handleRequest(req, res, (mp, body) => mp.update(body)));
