@@ -72,7 +72,7 @@ app.get('/.well-known/jwks.json', (req, res) => {
     res.status(500).json({ error: 'Auth controller not available' });
   });
   
-  app.post('/powersync-token', (req, res) => {
+app.post('/powersync-token', (req, res) => {
     res.status(500).json({ error: 'Auth controller not available' });
   });
 // Try to load data routes safely  
