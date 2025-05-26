@@ -70,7 +70,6 @@ app.use(authRoutes); // JWKS and public token generation
 //   }
 // });
 
-// Protected data routes (require PowerSync JWT authentication)
 app.use('/api', dataRoutes);
 
 // Error handling middleware
