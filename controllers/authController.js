@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const KeyManager = require('./auth/keyManager');
+const KeyManager = require('../auth/keyManager');
 const config = require('../config');
 
 const router = express.Router();
