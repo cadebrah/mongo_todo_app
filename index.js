@@ -5,7 +5,7 @@ const express = require('express');
 
 const config = require('./config');
 const dataRoutes = require('./controllers/dataController');
-const { router: authRoutes, generatePowerSyncToken } = require('./auth/authController');
+const { router: authRoutes, generatePowerSyncToken } = require('./controllers/authController');
 const { authenticateUser } = require('./middleware/authMiddleware');
 
 const app = express();
@@ -23,11 +23,11 @@ const app = express();
 // app.use(limiter);
 
 // Stricter rate limiting for auth endpoints
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20, // limit each IP to 20 auth requests per windowMs
-  message: 'Too many authentication attempts, please try again later.'
-});
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 20, // limit each IP to 20 auth requests per windowMs
+//   message: 'Too many authentication attempts, please try again later.'
+// });
 
 // Body parsing
 app.use(express.json({ limit: '10mb' }));
